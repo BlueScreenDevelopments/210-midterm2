@@ -3,9 +3,16 @@
 // 10/17/2024
 // Midterm #2
 
-
+//Including the necessary libraries
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <fstream>
+#include <string>
+
 using namespace std;
+
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 class DoublyLinkedList {
 private:
