@@ -29,7 +29,8 @@ private:
 
 public:
 	DoublyLinkedList() {
-		head = nullptr; tail = nullptr; {}
+		head = nullptr; tail = nullptr;
+	}
 
 		//Add a customer to the end of the line.
 		void push_back(const string & name) {
@@ -102,16 +103,62 @@ public:
 		return names;
 	}
 
+	// Main simulation function
+	//Random Number Generator
+	void simulate_coffee_shop(const vector<string>& names) {
+		DoublyLinkedList line;
+		srand(static_cast<unsigned int>(time(0)));
 
+	//Initial customers when the store opens
+		for (int i = 0; i < 5; ++i) {
+			line.push_back(names[rand() % names.size()]);
+		}
+		line.print_line();
+
+	//Run the simulation for 20 time periods
+		for (int time_step = 1; time_step <= 20; ++time_step) {
+			cout << "Time step #" << time_step << ":" << endl;
+
+	// Probability checks
+	//Random number in between 1 & 100
+			int prob = rand() % 100 + 1;
+
+	//Check if a customer is served (40% chance)
+			if (!line.is_empty() && prob <= 40) {
+				line.serve_customer();
+			}
+
+	//Check if a new customer joins (60% chance)
+			if (prob <= 60) {
+				line.push_back(names[rand() % names.size()]);
+			}
+
+	//Check if the last customer leaves (20% chance)
+			if (!line.is_empty() && (rand() % 100 + 1) <= 20) {
+				line.remove_last();
+			}
+
+	//Check if any particular customer leaves (10% chance)
+			if (!line.is_empty() && (rand() % 100 + 1) <= 10) {
+				line.remove_last();
+			}
+
+	//Check if a VIP customer joins (10% chance)
+			if (prob <= 10) {
+				string vip_name = names[rand() % names.size()] + " (VIP)";
+				cout << vip_name << " joins the front of the line." << endl;
+				line.push_back(vip_name);
+			}
+
+			// Print the current line
+			line.print_line();
+		}
+	}
 
 
 
 	int main() {
-
-
-
-
+		vector<string> names = read_names("names.txt");
+		simulate_coffee_shop(names);
 		return 0;
-	}
-	
-};
+	};
